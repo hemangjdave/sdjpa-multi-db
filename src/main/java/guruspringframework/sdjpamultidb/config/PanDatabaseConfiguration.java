@@ -9,6 +9,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,6 +24,11 @@ import static java.util.Objects.requireNonNull;
  * Time: 5:28 pm
  */
 @Configuration
+@EnableJpaRepositories(
+        basePackages = "guruspringframework.sdjpamultidb.repositories.pan",
+        entityManagerFactoryRef = "panEntityManagerFactory",
+        transactionManagerRef = "panTransactionManager"
+)
 public class PanDatabaseConfiguration {
 
     @Bean
@@ -41,7 +47,7 @@ public class PanDatabaseConfiguration {
     }
 
     @Bean
-    @Primary
+//    @Primary
     public LocalContainerEntityManagerFactoryBean panEntityManagerFactory(
             @Qualifier("panDataSource") DataSource panDataSource,
             EntityManagerFactoryBuilder builder
@@ -53,7 +59,7 @@ public class PanDatabaseConfiguration {
     }
 
     @Bean
-    @Primary
+//    @Primary
     public PlatformTransactionManager panTransactionManager(
             @Qualifier("panEntityManagerFactory") LocalContainerEntityManagerFactoryBean panEntityManagerFactory
     ) {
